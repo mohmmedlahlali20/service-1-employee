@@ -1,31 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
-@Controller('employee')
+@Controller()
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @Post()
-  create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeService.create(createEmployeeDto);
+  @MessagePattern('create_employee')
+  async createEmployee(data: CreateEmployeeDto) {
+    return this.employeeService.create(data);
   }
 
-  @Get()
-  findAll() {
+  @MessagePattern('find_all_employees')
+  async findAllEmployees() {
     return this.employeeService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('employeeID') employeeID: string) {
-    return this.employeeService.findOne(employeeID);
+  @MessagePattern('find_employee_by_id')
+  async findEmployeeById(id: string) {
+    return this.employeeService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('employeeID') employeeID: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
-    return this.employeeService.update(employeeID, updateEmployeeDto);
+  @MessagePattern('update_employee')
+  async updateEmployee({ id, updateData }: { id: string; updateData: any }) {
+    return this.employeeService.update(id, updateData);
   }
-
- 
 }
