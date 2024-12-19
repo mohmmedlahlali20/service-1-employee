@@ -7,10 +7,10 @@ async function bootstrap() {
     transport: Transport.TCP, 
     options: {
       host: 'localhost',
-      port: 5000, 
+      port: 1111, 
     },
   });
   await app.listen();
-  console.log('Microservice is listening on port 5000');
+  console.log('Microservice is listening on port 1111');
 }
 bootstrap();
