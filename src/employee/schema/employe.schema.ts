@@ -1,31 +1,30 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema({ timestamps: true }) 
-export class Employee extends Document {
-    @Prop({ required: true })
-    firstName: string;
+export type EmployeeDocument = Employee & Document;
 
-    @Prop({ required: true })
-    lastName: string;
+@Schema()
+export class Employee {
+  @Prop({ required: true })
+  first_name: string;
 
-    @Prop({ unique: true, required: true })
-    email: string;
+  @Prop({ required: true })
+  last_name: string;
 
-    @Prop({ required: true })
-    position: string;
+  @Prop({ required: true, unique: true })
+  email: string;
 
-    @Prop({ default: new Date() })
-    hireDate: Date;
+  @Prop({ required: true })
+  phone_number: string;
 
-    @Prop()
-    phone: string;
+  @Prop({ required: true })
+  position: string;
 
-    @Prop({ type: [String], default: [] })
-    skills: string[];
+  @Prop({ required: true })
+  date_of_joining: Date;
 
-    @Prop({ type: Boolean, default: true })
-    isActive: boolean;
+  @Prop({ required: true })
+  salary: number;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
